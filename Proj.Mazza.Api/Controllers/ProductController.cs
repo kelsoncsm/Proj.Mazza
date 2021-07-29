@@ -45,22 +45,6 @@ namespace Proj.Mazza.Api.Controllers
             }
         }
 
-
-        //[HttpGet("GetProductsByFilter")]
-        //[ProducesResponseType(typeof(IEnumerable<ProductGridDTO>), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetProductsByFilter(SearchModel filtros)
-        //{
-        //    try
-        //    {
-        //        return new JsonResult(await _productQueryHandler.GetSearch(filtros));
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception(e.Message);
-        //    }
-        //}
-
         [HttpPut("GetProductsByFilter")]
         [ProducesResponseType(typeof(ProductGridDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductsByFilter(SearchModel filtros)
@@ -101,49 +85,6 @@ namespace Proj.Mazza.Api.Controllers
             return new JsonResult(result);
 
         }
-
-
-
-        ///// <summary>
-        ///// Alterar Produto.
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <param name="cartorioModel"></param>
-        ///// <response code="200">Registro alterado com sucesso.</response>
-        //[HttpPut("{id}")]
-        //[ProducesResponseType(200)]
-        //public async Task<IActionResult> PutAsync([FromBody] Produto produto)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //    {
-        //        return this.BadRequest(this.ModelState);
-        //    }
-
-
-        //    return this.Ok(await _repository.Update(produto));
-        //}
-
-        ///// <summary>
-        ///// Excluir Produto.
-        ///// </summary>
-        ///// <param name="id"></param>
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType(200)]
-        //public async Task<IActionResult> DeleteAsync(int id)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //    {
-        //        return this.BadRequest(this.ModelState);
-        //    }
-
-
-        //    return this.Ok(await _repository.Delete(id));
-        //}
-
-
-
-
-
 
 
 
