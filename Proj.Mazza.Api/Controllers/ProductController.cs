@@ -88,5 +88,18 @@ namespace Proj.Mazza.Api.Controllers
 
 
 
+        #region - DELETE -
+        [HttpDelete]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromBody] DeleteProductCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return new JsonResult(result);
+        }
+        #endregion
+
+
     }
 }
