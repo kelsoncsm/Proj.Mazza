@@ -10,8 +10,14 @@ using Proj.Mazza.Domain.Aggregations.Products;
 
 namespace Proj.Mazza.Application.CommandHandlers
 {
-    public class CreateNewProductCommandHandler : IRequestHandler<CreateNewProductCommand, ProductDTO>
+    public class CreateNewProductCommandHandler : IRequestHandler<CreateNewProductCommand, bool>
     {
+
+
+        private readonly IProductRepository _productRepository;
+
+        private readonly IMapper _mapper;
+
         public CreateNewProductCommandHandler(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
@@ -19,11 +25,7 @@ namespace Proj.Mazza.Application.CommandHandlers
 
         }
 
-        private readonly IProductRepository _productRepository;
-
-        private readonly IMapper _mapper;
-
-        public async Task<ProductDTO> Handle(CreateNewProductCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreateNewProductCommand request, CancellationToken cancellationToken)
         {
             var newHolder = new Product(
                     name: request.Name,
@@ -37,7 +39,8 @@ namespace Proj.Mazza.Application.CommandHandlers
 
             await _productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
-            return await Task.FromResult(_mapper.Map<ProductDTO>(newHolder));
+            return await Task.FromResult(true);
+
         }
     }
 }

@@ -4,10 +4,9 @@ using System;
 
 namespace Proj.Mazza.Application.Commands
 {
-    public class CreateNewProductCommand : IRequest<ProductDTO>
+    public class CreateNewProductCommand : IRequest<bool>
     {
-        public Guid Id { get; set; }
-
+     
         public string Name { get; set; }
 
         public int? Category { get; set; }

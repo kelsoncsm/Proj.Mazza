@@ -12,7 +12,9 @@ namespace Proj.Mazza.Application.Mapping
             CreateMap<CreateNewProductCommand, Product>();
             CreateMap<UpdateProductCommand, Product>();
             CreateMap<Product, ProductDTO>();
-         
+            CreateMap<Product, ProductCadastroDTO>();
+            CreateMap<Product, ProductGridDTO>();
+
         }
     }
 }

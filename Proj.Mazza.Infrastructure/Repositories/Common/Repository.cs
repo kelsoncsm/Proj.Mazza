@@ -59,6 +59,12 @@ namespace Cyrela.Onboarding.Infrastructure.Data.EF.Repositories.Common
             return await _context.Set<TEntity>().FirstOrDefaultAsync(predicate);
         }
 
+        public async Task<IEnumerable<TEntity>> GetAll()
+        {
+            return await _context.Set<TEntity>().ToListAsync();
+
+        }
+
         public async Task UpdateAsync(TEntity entity)
         {
             entity.Update();
