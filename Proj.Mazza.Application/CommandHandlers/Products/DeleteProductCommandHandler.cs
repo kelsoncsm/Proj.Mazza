@@ -29,19 +29,8 @@ namespace Proj.Mazza.Application.CommandHandlers
 
         public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            //using var conn = new SqlConnection(_configuration.GetConnectionString("Default"));
-
-            //await conn.OpenAsync();
-
-            //var retorno = await conn.ExecuteAsync(
-            //    sql: "agent.[PROC_DELETE_CASCATE_HOLDER]",
-            //    param: new
-            //    {
-            //        HolderId = request.Id
-            //    },
-            //    commandType: System.Data.CommandType.StoredProcedure);
-
-            return await Task.FromResult(0 > 0 ? true : false);
+            await _productRepository.DeleteAsync(request.Id);
+            return await Task.FromResult(true);
         }
     }
 }

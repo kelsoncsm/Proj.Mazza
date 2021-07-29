@@ -32,6 +32,8 @@ namespace Cyrela.Onboarding.Infrastructure.Data.EF.Repositories.Common
             var finded = await _context.Set<TEntity>().FindAsync(id);
 
             _context.Set<TEntity>().Remove(finded);
+
+            _context.SaveChanges();
         }
 
         public async Task DeleteManyAsync(Expression<Func<TEntity, bool>> predicate)
