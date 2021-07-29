@@ -5,6 +5,7 @@ using Proj.Mazza.Domain.Aggregations.Products;
 using Proj.Mazza.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Proj.Mazza.Domain.Aggregations.Users;
 
 namespace Cyrela.Onboarding.Infrastructure.Data.EF
 {
@@ -13,6 +14,8 @@ namespace Cyrela.Onboarding.Infrastructure.Data.EF
         public const string SCHEMA = "product";
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
         private IDbContextTransaction _currentTransaction;
 
