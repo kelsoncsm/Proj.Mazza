@@ -12,36 +12,71 @@ using Proj.Mazza.Domain.Common.Helpers;
 
 
 using AutoMapper.Configuration;
+using Proj.Mazza.Domain.Aggregations.Products.Repositories;
+using AutoMapper;
+using Proj.Mazza.Application.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Proj.Mazza.Application.QueryHandlers
 {
     public class ProductQueryHandler : IProductQueryHandler
     {
-        private readonly IConfiguration _configuration;
        
+        private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
 
-        public ProductQueryHandler(IConfiguration configuration)
+        public ProductQueryHandler( IProductRepository productRepository, IMapper mapper)
         {
-            _configuration = configuration;
            
+            _productRepository = productRepository;
+            _mapper = mapper;
+
+
         }
 
-        ///// <summary>
-        ///// Busca o proprietário pelo id
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //public async Task<ProductDTO> GetHolderById(Guid id)
-        //{
-        //    using var conn = new SqlConnection(_configuration.GetConnectionString("Default"));
 
-        //    await conn.OpenAsync();
+        public async Task<IEnumerable<ProductGridDTO>> GetAllProduct()
+        {
 
-        //    return await conn.QueryFirstOrDefaultAsync<ProductDTO>(
-        //        sql: "holder.[PROC_FETCH_HOLDER_PRINCIPAL]",
-        //        param: new { Id = id },
-        //        commandType: System.Data.CommandType.StoredProcedure);
-        //}
+            var product = await _productRepository.GetAll();
+
+            return _mapper.Map<IEnumerable<ProductGridDTO>>(product);
+        }
+
+        /// <summary>
+        /// Busca o produto pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<ProductDTO> GetProductById(Guid id)
+        {
+
+            var product = await _productRepository.FindAsync(h => h.Id == id);
+
+            return _mapper.Map<ProductDTO>(product);
+        }
+
+        public async Task<IEnumerable<ProductGridDTO>> GetSearch(SearchModel objetoPesquisa)
+        {
+
+            var product = await _productRepository.GetAll();
+
+
+            if (!string.IsNullOrEmpty(objetoPesquisa.Name))
+            {
+                product = product.Where(x => EF.Functions.Like(x.Name, "%" + objetoPesquisa.Name + "%"));
+            }
+
+
+            if (objetoPesquisa.CategoryId.HasValue)
+            {
+                product = product.Where(x => x.Category.Equals(objetoPesquisa.CategoryId.Value));
+            }
+
+            return _mapper.Map<IEnumerable<ProductGridDTO>>(product);
+
+        }
+
 
         ///// <summary>
         ///// Lista os proprietários participantes pelo id do proprietário principal

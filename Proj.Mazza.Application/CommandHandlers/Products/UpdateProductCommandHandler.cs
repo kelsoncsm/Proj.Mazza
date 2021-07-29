@@ -30,26 +30,35 @@ namespace Proj.Mazza.Application.CommandHandlers
 
         public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-           
+
+
+            var model = await _productRepository.FindAsync(x => x.Name.Contains(request.Name));
+             
+
+            if(model != null && model.Id != request.Id)
+                throw new EntityNotFoundException($"Produto já cadastrado!!!");
+
+
             var product = await _productRepository.FindAsync(h => h.Id == request.Id);
 
+
             if (product is null)
-                throw new EntityNotFoundException($"Product {request.Id} not found");
+                throw new EntityNotFoundException($"Produto {request.Id} not found");
 
             if (string.IsNullOrEmpty(request.Name))
-                throw new EntityNotFoundException($"Name  not found");
+                throw new EntityNotFoundException($"Nome não pode ser nulo!!!");
 
             if (!request.Category.HasValue)
-                throw new EntityNotFoundException($"Category  not found");
+                throw new EntityNotFoundException($"Categoria não pode ser nulo!!!");
 
 
             if (!request.Price.HasValue)
-                throw new EntityNotFoundException($"Price  not found");
-
+                throw new EntityNotFoundException($"Preço não pode ser nulo!!!");
 
             product.SetName(request.Name);
             product.SetCategory(request.Category.Value);
             product.SetPrice(request.Price.Value);
+            product.UpdatedAt = DateTime.Now;
 
             await _productRepository.UpdateAsync(product);
             await _productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

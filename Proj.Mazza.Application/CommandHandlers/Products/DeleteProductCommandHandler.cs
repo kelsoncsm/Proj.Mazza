@@ -8,22 +8,24 @@ using Proj.Mazza.Domain.Aggregations.Products.Repositories;
 using MediatR;
 using System.Data.SqlClient;
 using AutoMapper.Configuration;
+using AutoMapper;
 
 namespace Proj.Mazza.Application.CommandHandlers
 {
     public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, bool>
     {
 
-        private readonly IConfiguration _configuration;
+        private readonly IProductRepository _productRepository;
 
-        public DeleteProductCommandHandler(IProductRepository productRepository,  IConfiguration configuration)
+        private readonly IMapper _mapper;
+
+        public DeleteProductCommandHandler(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
-           
-            _configuration = configuration;
+            _mapper = mapper;
+
         }
 
-        private readonly IProductRepository _productRepository;
 
         public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {

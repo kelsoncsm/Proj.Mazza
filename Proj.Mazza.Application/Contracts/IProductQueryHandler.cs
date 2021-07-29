@@ -2,13 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Proj.Mazza.Application.DTOs;
-
+using Proj.Mazza.Application.Models;
 
 namespace Proj.Mazza.Application.Contracts
 {
     public interface IProductQueryHandler
     {
-        //Task<ProductDTO> GetHolderById(Guid id);
+        Task<ProductDTO> GetProductById(Guid id);
+        Task<IEnumerable<ProductGridDTO>> GetSearch(SearchModel objetoPesquisa);
+        Task<IEnumerable<ProductGridDTO>> GetAllProduct();
+
+
+
         //Task<IEnumerable<ProductDTO>> GetProductsByID(Guid id);
         //Task<IEnumerable<ProductGridDTO>> GetAllHolder(GridSearch objetoPesquisa);
         //Task<IEnumerable<ProductDTO>> GetProductsByPrincipal(Guid principalId);

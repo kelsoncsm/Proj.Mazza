@@ -12,7 +12,7 @@ namespace Proj.Mazza.Domain.Aggregations.Users
 
 
        
-        public string mail { get; private set; }
+        public string Mail { get; private set; }
     
         public string Password { get; private set; }
 
